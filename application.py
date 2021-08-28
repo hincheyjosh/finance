@@ -84,6 +84,7 @@ def buy():
             return render_template("buy.html")
 
         shares = request.form.get("shares")
+        shares = shares.strip()
         # verify user input
         try:
             shares = int(shares)
