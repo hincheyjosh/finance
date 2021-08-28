@@ -272,7 +272,7 @@ def sell():
         # make sure user has the amount of shares requested to sell
         if stock_info[0]["shares"] < int(shares_to_sell):
             flash("You don't have that many shares.")
-            return render_template("sell.html")
+            return redirect("/sell")
 
         else:
             db.execute("UPDATE stocks SET shares = shares - ? WHERE user_id = ? and symbol = ?", shares_to_sell, session["user_id"], symbol)
