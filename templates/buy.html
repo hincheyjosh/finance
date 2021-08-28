@@ -7,7 +7,7 @@
 {% block main %}
     <form action="/buy" method="post">
         <div class="form-group">
-            <input autocomplete="off" autocapitalize="characters" autofocus class="form-control" name="symbol" placeholder="Symbol" type="text">
+            <input autocomplete="off" autocapitalize="characters" autofocus class="form-control" name="symbol" placeholder="Ticker" type="text">
         </div>
         <div class="form-group">
             <input autocomplete="off" autofocus class="form-control" name="shares" placeholder="Shares" type="number" min="1">
@@ -15,7 +15,7 @@
         <button class="btn btn-primary" type="submit">Buy</button>
     </form>
     <footer class="small text-center">
-        <a href="https://www.marketwatch.com/tools/quotes/lookup.asp">Look up stock tickers here.</a>
+        Look up stock tickers <a href="https://www.marketwatch.com/tools/quotes/lookup.asp" target="_blank" rel="noopener noreferrer">here</a>.
     </footer>
 {% endblock %}
 

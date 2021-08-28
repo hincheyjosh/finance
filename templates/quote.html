@@ -7,12 +7,12 @@
 {% block main %}
     <form action="/quote" method="post">
         <div class="form-group">
-            <input autocomplete="off" autofocus required class="form-control" name="symbol" placeholder="Symbol" type="text">
+            <input autocomplete="off" autofocus required class="form-control" name="symbol" placeholder="Ticker" type="text">
         </div>
         <button class="btn btn-primary" type="submit">Quote</button>
     </form>
     <footer class="small text-center">
-        Look up stock tickers <a href="https://www.marketwatch.com/tools/quotes/lookup.asp">here</a>.
+        Look up stock tickers <a href="https://www.marketwatch.com/tools/quotes/lookup.asp" target="_blank" rel="noopener noreferrer">here</a>.
     </footer>
 
 {% endblock %}

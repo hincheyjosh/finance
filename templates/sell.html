@@ -9,7 +9,7 @@
     <form action="/sell" method="post">
         <div class = "form-group">
             <select name="symbol" class="form-control">
-                <option disabled selected value="">Symbol</option>
+                <option disabled selected value="">Ticker</option>
                 {% for stock in stocks %}
                     <option value="{{ stock.symbol }}">{{ stock.symbol }}</option>
                 {% endfor %}
