@@ -89,10 +89,12 @@ def buy():
             shares = int(shares)
 
         except ValueError:
-            return apology("Please enter a whole number.", 400)
+            flash("Please enter a whole number.")
+            return redirect("/buy")
 
         if shares < 1:
-            return apology("Please enter 1 or more shares.", 400)
+            flash("Number of shares must be greater than 1.")
+            return redirect("/buy")
 
 
 
