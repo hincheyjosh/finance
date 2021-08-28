@@ -80,7 +80,8 @@ def buy():
 
         # verify ticker symbol
         if not lookup(symbol):
-            return apology("Invalid ticker.", 400)
+            flash("Not a valid ticker!")
+            return render_template("buy.html")
 
         shares = request.form.get("shares")
         # verify user input
@@ -104,7 +105,8 @@ def buy():
 
         # make sure user has enough capital
         if user_info[0]["cash"] < transaction_cost:
-            return apology("Not enough capital", 403)
+            flash("You don't have enough capital!")
+            return render_template("buy.html")
 
 
         # check if user already has this stock and if so update amount
@@ -154,11 +156,13 @@ def login():
 
         # Ensure username was submitted
         if not request.form.get("username"):
-            return apology("must provide username", 403)
+            flash("Must provide username.")
+            return render_template("login.html")
 
         # Ensure password was submitted
         elif not request.form.get("password"):
-            return apology("must provide password", 403)
+            flash("Must provide password.")
+            return render_template("login.html")
 
         # Query database for username
         rows = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
@@ -201,11 +205,15 @@ def quote():
     else:
         symbol = request.form.get("symbol")
         if not symbol:
-            return apology("Please enter a symbol", 400)
+            flash("Please enter a valid ticker.")
+            return render_template("quote.html")
 
         stock_info = lookup(symbol)
         if not stock_info:
-            return apology("Ticker not found", 400)
+            flash("No stock with that ticker has been found.")
+            return render_template("quote.html")
+
+
         flash("You have been quoted!")
         return render_template("quoted.html", stock_info = stock_info)
 
@@ -220,18 +228,23 @@ def register():
     else:
         # make sure user provides username and password
         if not request.form.get("username"):
-            return apology("Must Provide Username", 400)
+            flash("Must provide username.")
+            return render_template("register.html")
 
         if not request.form.get("password"):
-            return apology("Must Create Password", 400)
+            flash("Must provide a password.")
+            return render_template("register.html")
 
         # confirm passwords match
         if request.form.get("password") != request.form.get("confirmation"):
-            return apology("Passwords do not match", 400)
+            flash("Passwords did not match.")
+            return render_template("register.html")
+
         # confirm uniqueness of username
         check_username = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
         if len(check_username) > 0:
-            return apology("Username taken", 400)
+            flash("Username is taken.")
+            return render_template("register.html")
 
         # insert into SQL db
         db.execute("INSERT INTO users (username, hash) VALUES (?, ?)", request.form.get("username"), generate_password_hash(request.form.get("password")))
@@ -258,7 +271,9 @@ def sell():
 
         # make sure user has the amount of shares requested to sell
         if stock_info[0]["shares"] < int(shares_to_sell):
-            return apology("Not enough shares", 400)
+            flash("You don't have that many shares.")
+            return render_template("sell.html")
+
         else:
             db.execute("UPDATE stocks SET shares = shares - ? WHERE user_id = ? and symbol = ?", shares_to_sell, session["user_id"], symbol)
             db.execute("UPDATE users SET cash = cash + ? WHERE id = ?", sell_amount, session["user_id"])
